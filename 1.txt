@@ -1,0 +1,5 @@
+# port scanning
+# It uses three-way TCP handshake mechanism
+
+
+nc -nvv -w 1 -z 10.11.1.220 3388-3390

@@ -1,0 +1,3 @@
+# udp scanning
+
+nc -nv -u -z -w 1 10.11.1.115 160-162

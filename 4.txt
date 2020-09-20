@@ -1,0 +1,23 @@
+# nmap scan types
+
+1. Stealth Scanning
+# tcp port scanning based on the return of SYN,ACK
+# application log will not appear
+ 
+> sudo namp -sS 10.11.1.220
+
+2. TCP connect scanning
+# takes much longer
+# when scanning through certain types of proxy
+
+> nmap -sT 10.11.1.220
+
+3. UDT scanning
+# Nmap will use two methods to determine open or not
+# Sends empty packets to get responses
+
+> sudo nmap -sU 10.11.1.115
+
+# You can combine those two methods to following:
+> sudo namp -sS -sU 10.11.1.115
+ 

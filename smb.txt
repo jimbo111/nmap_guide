@@ -1,0 +1,24 @@
+# scannign for the netBIOS sevice
+# SMB 
+# tcp 139 & 445
+
+> nmap -v -p 139,445 -oG smb.txt 10.11.1.1-254 
+or
+> sudo nbtscan -r 10.11.1.0/24
+
+
+# nse scripts
+
+> ls -1 /usr/share/nmap/scripts/smb*
+
+# smb OS discovery module
+
+> nmap -v -p 139, 445 --script=smb-os-discovery 10.11.1.227
+
+# To see known smb protocol vulnerabilities
+
+> ls /usr/share/nmap/scripts/smb-vuln-*
+
+# To scan a vulnerability of a certain protocol in this case ms08-067
+
+> nmap -v -p 139,445 --script=smb-vuln-ms08-067 --script-args=unsafe=1 10.11.1.227
