@@ -1,0 +1,65 @@
+# ARP Discovery
+
+sudo nmap -sn -PR <target>/24
+sudo arp-scan -l
+sudo arp-scan <target>/24
+sudo netdiscover -r <target>/24
+sudo netdiscover -r <target>/24 -p
+
+# ICMP Sweep
+
+nmap -sn <target>/24
+nmap -sn -PE <target>/24
+nmap -sn -PP <target>/24
+nmap -sn -PM <target>/24
+
+# TCP Discovery
+
+nmap -sn -PS21,22,25,80,443,445,3389,8080 <target>/24
+nmap -sn -PA80,443 <target>/24
+
+# UDP Discovery
+
+nmap -sn -PU53,161 <target>/24
+
+# SCTP Discovery
+
+nmap -sn -PY <target>/24
+
+# No Ping
+
+nmap -Pn <target>
+nmap -Pn -p- <target>
+
+# List Scan
+
+nmap -sL <target>/24
+
+# Sweep with Output
+
+nmap -sn <target>/24 -oG alive.txt
+nmap -sn <target>.1-254 -oG alive.txt
+grep "Up" alive.txt | cut -d " " -f 2 > targets.txt
+
+# Specific Port Sweep
+
+nmap -p 80 <target>/24 -oG web.txt
+nmap -p 445 <target>/24 -oG smb.txt
+nmap -p 3389 <target>/24 -oG rdp.txt
+grep open web.txt | cut -d " " -f 2
+
+# Top Ports Sweep
+
+nmap -sT -A --top-ports=20 <target>/24 -oG top20.txt
+
+# DNS Control
+
+nmap -sn -n <target>/24
+nmap -sn -R <target>/24
+nmap -sn --dns-servers 8.8.8.8,8.8.4.4 <target>/24
+
+# Input/Exclude
+
+nmap -sn -iL targets.txt
+nmap -sn -iL targets.txt --excludefile exclusions.txt
+nmap -sn <target>/24 --exclude <host1>,<host2>

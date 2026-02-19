@@ -1,0 +1,260 @@
+# OS Detection
+
+sudo nmap -O <target>
+sudo nmap -O --osscan-guess <target>
+sudo nmap -O --osscan-limit <target>
+sudo nmap -O --max-os-tries 1 <target>
+
+# Service/Version Detection
+
+nmap -sV <target>
+nmap -sV --version-intensity 5 <target>
+nmap -sV --version-light <target>
+nmap -sV --version-all <target>
+nmap -sV --version-trace <target>
+
+# Aggressive Scan
+
+nmap -A <target>
+nmap -A -T4 <target>
+nmap -A -T4 -p- <target>
+
+# Banner Grabbing
+
+nmap -sV --script=banner <target>
+nc -nv <target> <port>
+echo "" | nc -nv -w 1 <target> <port>
+curl -s -I http://<target>
+
+# NSE Categories
+
+nmap --script=auth <target>
+nmap --script=broadcast <target>
+nmap --script=brute <target>
+nmap --script=default <target>
+nmap --script=discovery <target>
+nmap --script=dos <target>
+nmap --script=exploit <target>
+nmap --script=external <target>
+nmap --script=fuzzer <target>
+nmap --script=intrusive <target>
+nmap --script=malware <target>
+nmap --script=safe <target>
+nmap --script=version <target>
+nmap --script=vuln <target>
+
+# NSE Boolean Selection
+
+nmap --script "vuln and safe" <target>
+nmap --script "default or safe" <target>
+nmap --script "not intrusive" <target>
+nmap --script "(default or safe or intrusive) and not http-*" <target>
+
+# HTTP Scripts
+
+nmap --script=http-title <target>
+nmap --script=http-headers <target>
+nmap --script=http-enum <target>
+nmap --script=http-methods <target>
+nmap --script=http-robots.txt <target>
+nmap --script=http-shellshock --script-args uri=/cgi-bin/test.cgi <target>
+nmap --script=http-vuln* <target>
+nmap --script=http-put --script-args http-put.url=/uploads/shell.php,http-put.file=shell.php <target>
+nmap --script=http-phpmyadmin-dir-traversal <target>
+nmap --script=http-apache-negotiation <target>
+nmap --script=http-backup-finder <target>
+nmap --script=http-config-backup <target>
+nmap --script=http-default-accounts <target>
+nmap --script=http-wordpress-enum <target>
+nmap --script=http-wordpress-brute <target>
+
+# SSL/TLS Scripts
+
+nmap --script=ssl-heartbleed <target>
+nmap --script=ssl-poodle <target>
+nmap --script=ssl-cert <target>
+nmap --script=ssl-enum-ciphers <target>
+nmap --script=ssl-dh-params <target>
+nmap --script=ssl-known-key <target>
+nmap --script=sslv2 <target>
+nmap --script=tls-ticketbleed <target>
+
+# DNS Scripts
+
+nmap --script=dns-brute <target>
+nmap --script=dns-zone-transfer --script-args dns-zone-transfer.domain=<domain> <target>
+nmap --script=dns-cache-snoop <target>
+nmap --script=dns-srv-enum --script-args dns-srv-enum.domain=<domain> <target>
+
+# FTP Scripts
+
+nmap --script=ftp-anon <target>
+nmap --script=ftp-bounce <target>
+nmap --script=ftp-vsftpd-backdoor <target>
+nmap --script=ftp-proftpd-backdoor <target>
+nmap --script=ftp-libopie <target>
+nmap --script=ftp-syst <target>
+
+# SMTP Scripts
+
+nmap --script=smtp-commands <target>
+nmap --script=smtp-enum-users <target>
+nmap --script=smtp-open-relay <target>
+nmap --script=smtp-vuln-cve2010-4344 <target>
+nmap --script=smtp-vuln-cve2011-1720 <target>
+nmap --script=smtp-vuln-cve2011-1764 <target>
+nmap --script=smtp-ntlm-info <target>
+
+# SSH Scripts
+
+nmap --script=ssh-brute <target>
+nmap --script=ssh-auth-methods <target>
+nmap --script=ssh-hostkey <target>
+nmap --script=ssh-publickey-acceptance --script-args "ssh.usernames={'root'},publickeys={'id_rsa.pub'}" <target>
+nmap --script=ssh2-enum-algos <target>
+
+# SNMP Scripts
+
+nmap -sU -p 161 --script=snmp-brute <target>
+nmap -sU -p 161 --script=snmp-info <target>
+nmap -sU -p 161 --script=snmp-netstat <target>
+nmap -sU -p 161 --script=snmp-processes <target>
+nmap -sU -p 161 --script=snmp-sysdescr <target>
+nmap -sU -p 161 --script=snmp-interfaces <target>
+nmap -sU -p 161 --script=snmp-win32-software <target>
+nmap -sU -p 161 --script=snmp-win32-users <target>
+nmap -sU -p 161 --script=snmp-win32-services <target>
+
+# MySQL Scripts
+
+nmap --script=mysql-info <target>
+nmap --script=mysql-enum <target>
+nmap --script=mysql-empty-password <target>
+nmap --script=mysql-brute <target>
+nmap --script=mysql-databases --script-args mysqluser=<user>,mysqlpass=<pass> <target>
+nmap --script=mysql-dump-hashes --script-args username=<user>,password=<pass> <target>
+nmap --script=mysql-vuln-cve2012-2122 <target>
+nmap --script=mysql-audit --script-args mysql-audit.username=<user>,mysql-audit.password=<pass>,mysql-audit.filename=/usr/share/nmap/nselib/data/mysql-cis.audit <target>
+
+# MSSQL Scripts
+
+nmap --script=ms-sql-info <target>
+nmap --script=ms-sql-config <target>
+nmap --script=ms-sql-empty-password <target>
+nmap --script=ms-sql-brute <target>
+nmap --script=ms-sql-xp-cmdshell --script-args mssql.username=<user>,mssql.password=<pass>,ms-sql-xp-cmdshell.cmd="whoami" <target>
+nmap --script=ms-sql-hasdbaccess --script-args mssql.username=<user>,mssql.password=<pass> <target>
+nmap --script=ms-sql-tables --script-args mssql.username=<user>,mssql.password=<pass> <target>
+nmap --script=ms-sql-ntlm-info <target>
+nmap --script=ms-sql-dump-hashes --script-args mssql.username=<user>,mssql.password=<pass> <target>
+
+# RDP Scripts
+
+nmap --script=rdp-enum-encryption <target>
+nmap --script=rdp-vuln-ms12-020 <target>
+nmap --script=rdp-ntlm-info <target>
+
+# VNC Scripts
+
+nmap --script=vnc-info <target>
+nmap --script=vnc-brute <target>
+nmap --script=realvnc-auth-bypass <target>
+
+# LDAP Scripts
+
+nmap --script=ldap-search <target>
+nmap --script=ldap-rootdse <target>
+nmap --script=ldap-brute <target>
+nmap --script=ldap-novell-getpass <target>
+
+# NTP Scripts
+
+nmap -sU -p 123 --script=ntp-monlist <target>
+nmap -sU -p 123 --script=ntp-info <target>
+
+# TFTP Scripts
+
+nmap -sU -p 69 --script=tftp-enum <target>
+
+# Oracle Scripts
+
+nmap --script=oracle-sid-brute <target>
+nmap --script=oracle-tns-version <target>
+nmap --script=oracle-enum-users --script-args oracle-enum-users.sid=<SID> <target>
+nmap --script=oracle-brute --script-args oracle-brute.sid=<SID> <target>
+
+# Redis Scripts
+
+nmap --script=redis-info <target>
+nmap --script=redis-brute <target>
+
+# MongoDB Scripts
+
+nmap --script=mongodb-info <target>
+nmap --script=mongodb-databases <target>
+nmap --script=mongodb-brute <target>
+
+# Memcached Scripts
+
+nmap --script=memcached-info <target>
+
+# Docker Scripts
+
+nmap --script=docker-version <target>
+
+# NSE Script Args
+
+nmap --script=http-enum --script-args http-enum.basepath=/admin/ <target>
+nmap --script=http-brute --script-args userdb=users.txt,passdb=pass.txt <target>
+nmap --script=snmp-brute --script-args snmp-brute.communitiesdb=communities.txt <target>
+nmap --script=smb-brute --script-args userdb=users.txt,passdb=pass.txt <target>
+
+# NSE Utilities
+
+nmap --script-help <script_name>
+nmap --script-help "http-*"
+nmap --script-updatedb
+ls /usr/share/nmap/scripts/
+grep "categories" /usr/share/nmap/scripts/*.nse
+
+# Vulnerability Scanning
+
+nmap --script vuln <target>
+nmap --script vuln -p 80,443 <target>
+nmap --script "vuln and not dos" <target>
+nmap -sV --script=vulscan/vulscan.nse <target>
+nmap -sV --script=vulners <target>
+
+# Output Formats
+
+nmap -oN output.txt <target>
+nmap -oG output.gnmap <target>
+nmap -oX output.xml <target>
+nmap -oA output_all <target>
+nmap -oS output.skid <target>
+nmap -v <target>
+nmap -vv <target>
+nmap -d <target>
+nmap -dd <target>
+nmap --reason <target>
+nmap --open <target>
+nmap --packet-trace <target>
+nmap --iflist
+
+# Output Processing
+
+xsltproc output.xml -o report.html
+searchsploit --nmap output.xml
+
+# Comprehensive Scans
+
+nmap -sC -sV -p- -T4 <target>
+nmap -sC -sV -O -p- -T4 -oA full <target>
+sudo nmap -sS -sV -sC -O -p- --min-rate 5000 <target>
+sudo nmap -sS -sU -sV -sC -O -p- -T4 -oA complete <target>
+
+# Quick Targeted Scans
+
+nmap -sC -sV -p 21,22,23,25,53,80,110,111,135,139,143,443,445,993,995,1433,1723,3306,3389,5432,5900,8080,8443 <target>
+nmap --top-ports 100 -sV -sC <target>
+nmap --top-ports 1000 -sV -sC <target>

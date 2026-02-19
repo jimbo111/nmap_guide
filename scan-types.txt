@@ -1,0 +1,73 @@
+# SYN Scan
+
+sudo nmap -sS <target>
+sudo nmap -sS -p- <target>
+sudo nmap -sS -p 1-65535 --min-rate 5000 <target>
+
+# TCP Connect Scan
+
+nmap -sT <target>
+nmap -sT -p- <target>
+
+# UDP Scan
+
+sudo nmap -sU <target>
+sudo nmap -sU --top-ports 100 <target>
+sudo nmap -sU -p 53,69,111,123,137,161,162,500,514,520,1434 <target>
+
+# Combined TCP/UDP
+
+sudo nmap -sS -sU <target>
+sudo nmap -sS -sU -p T:1-65535,U:53,69,111,123,137,161,500 <target>
+
+# FIN Scan
+
+sudo nmap -sF <target>
+
+# NULL Scan
+
+sudo nmap -sN <target>
+
+# Xmas Scan
+
+sudo nmap -sX <target>
+
+# ACK Scan
+
+sudo nmap -sA <target>
+
+# Window Scan
+
+sudo nmap -sW <target>
+
+# Maimon Scan
+
+sudo nmap -sM <target>
+
+# Idle/Zombie Scan
+
+sudo nmap -sI <zombie_ip> <target>
+sudo nmap -sI <zombie_ip>:<port> <target>
+
+# FTP Bounce Scan
+
+nmap -b <ftp_relay_host> <target>
+nmap -b anonymous@<ftp_relay_host> <target>
+
+# SCTP INIT Scan
+
+sudo nmap -sY <target>
+
+# SCTP COOKIE-ECHO Scan
+
+sudo nmap -sZ <target>
+
+# IP Protocol Scan
+
+sudo nmap -sO <target>
+
+# Custom TCP Flags
+
+nmap --scanflags URGACKPSHRSTSYNFIN <target>
+nmap --scanflags SYN <target>
+nmap --scanflags SYNFIN <target>

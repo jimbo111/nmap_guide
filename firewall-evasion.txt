@@ -1,0 +1,97 @@
+# Traffic Inspection
+
+sudo iptables -I INPUT 1 -s <target> -j ACCEPT
+sudo iptables -I OUTPUT 1 -d <target> -j ACCEPT
+sudo iptables -Z
+sudo iptables -vn -L
+
+# Fragmentation
+
+sudo nmap -f <target>
+sudo nmap -ff <target>
+sudo nmap --mtu 8 <target>
+sudo nmap --mtu 16 <target>
+sudo nmap --mtu 24 <target>
+
+# Decoys
+
+sudo nmap -D RND:10 <target>
+sudo nmap -D <decoy1>,<decoy2>,ME,<decoy3> <target>
+sudo nmap -D RND:5,ME <target>
+
+# Source Port
+
+sudo nmap --source-port 53 <target>
+sudo nmap -g 88 <target>
+sudo nmap -g 53 -sU <target>
+
+# IP Spoofing
+
+sudo nmap -S <spoofed_ip> -e <interface> -Pn <target>
+
+# MAC Spoofing
+
+sudo nmap --spoof-mac 0 <target>
+sudo nmap --spoof-mac Dell <target>
+sudo nmap --spoof-mac Apple <target>
+sudo nmap --spoof-mac 00:11:22:33:44:55 <target>
+
+# Data Length
+
+sudo nmap --data-length 25 <target>
+sudo nmap --data-length 50 <target>
+
+# TTL
+
+sudo nmap --ttl 64 <target>
+sudo nmap --ttl 128 <target>
+
+# Bad Checksum
+
+nmap --badsum <target>
+
+# Timing Templates
+
+nmap -T0 <target>
+nmap -T1 <target>
+nmap -T2 <target>
+nmap -T3 <target>
+nmap -T4 <target>
+nmap -T5 <target>
+
+# Granular Timing
+
+nmap --max-retries 1 <target>
+nmap --host-timeout 30m <target>
+nmap --scan-delay 5s <target>
+nmap --max-scan-delay 10s <target>
+nmap --min-rate 100 <target>
+nmap --max-rate 500 <target>
+nmap --min-parallelism 10 <target>
+nmap --max-parallelism 100 <target>
+
+# Proxychains
+
+proxychains nmap -sT -Pn <target>
+proxychains nmap -sT -Pn -p 80,443 <target>
+
+# Idle Scan
+
+sudo nmap -sI <zombie_ip> <target>
+sudo nmap -sI <zombie_ip>:<source_port> <target>
+
+# IPv6
+
+nmap -6 <target_ipv6>
+nmap -6 -sS -p- <target_ipv6>
+
+# Random Data
+
+nmap --data-string "random_garbage" <target>
+
+# IP Options
+
+nmap --ip-options "L <loose_source>" <target>
+nmap --ip-options "S <strict_source>" <target>
+nmap --ip-options "R" <target>
+nmap --ip-options "T" <target>
